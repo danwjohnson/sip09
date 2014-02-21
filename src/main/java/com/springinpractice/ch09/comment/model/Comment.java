@@ -1,4 +1,5 @@
 /* 
+ /* 
  * Copyright (c) 2013 Manning Publications Co.
  * 
  * Book: http://manning.com/wheeler/
@@ -30,7 +31,8 @@ public final class Comment implements Comparable<Comment> {
 	private String name;
 	private String email;
 	private String web;
-	private String text;
+	private String markdownText;
+	private String htmlText;
 	private String ipAddress;
 	private Date dateCreated;
 
@@ -89,10 +91,16 @@ public final class Comment implements Comparable<Comment> {
 	}
 
 	@Size(min = 1, max = 4000)
-	@Column(name = "text")
-	public String getText() { return text; }
+	@Column(name = "markdown_text")
+	public String getMarkdownText() { return markdownText; }
 
-	public void setText(String text) { this.text = text; }
+	public void setMarkdownText(String markdownText) { this.markdownText = markdownText; }
+
+	@Size(min = 1, max = 4000)
+	@Column(name = "html_text")
+	public String getHtmlText() { return htmlText; }
+
+	public void setHtmlText(String htmlText) { this.htmlText = htmlText; }
 
 	@Column(name = "ip_addr")
 	public String getIpAddress() { return ipAddress; }

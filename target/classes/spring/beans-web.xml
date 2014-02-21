@@ -28,25 +28,25 @@ Code: https://github.com/springinpractice
 		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util-3.1.xsd">
-
+	
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
-
+	
 	<mvc:view-controller path="/" view-name="redirect:/articles.html" />
-
+	
 	<context:component-scan base-package="com.springinpractice.ch09.article.web" />
-
+	
 	<util:map id="viewNames">
 		<entry key="articleList" value="articles/articleList" />
 		<entry key="articlePage" value="articles/articlePage" />
 		<entry key="postCommentFailed" value="articles/articlePage" />
 	</util:map>
-
+	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/jsp/"
 		p:suffix=".jsp" />
-
+	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
 		p:basename="classpath:/spring/messages" />

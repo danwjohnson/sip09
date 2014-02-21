@@ -10,15 +10,22 @@
 <fmt:formatDate var="articleDate" value="${article.dateCreated}" />
 
 <c:url var="articlesCssUrl" value="/styles/articles.css" />
+<c:url var="articlesUrl" value="/articles.html" />
+<c:url var="postCommentUrl" value="/articles/${article.name}/comments?p=${articlePage.pageNumber}#postComment" />
+<c:url var="zoneItUrl" value="/images/zone_it.png" />
+
+<%-- Syntax Highlighter --%>
 <c:url var="shCssUrl" value="/styles/SyntaxHighlighter.css" />
 <c:url var="shCoreJsUrl" value="/scripts/shCore.js" />
 <c:url var="shBrushJavaJsUrl" value="/scripts/shBrushJava.js" />
 <c:url var="shBrushXmlJsUrl" value="/scripts/shBrushXml.js" />
 <c:url var="clipboardSwfUrl" value="/swf/clipboard.swf" />
-<c:url var="articlesUrl" value="/articles.html" />
-<c:url var="postCommentUrl" value="/articles/${article.name}/comments?p=${articlePage.pageNumber}#postComment" />
 
-<c:url var="zoneItUrl" value="/images/zone_it.png" />
+<%-- WMD --%>
+<c:url var="wmdCssUrl" value="/scripts/pagedown/wmd.css" />
+<c:url var="markdownConverterJsUrl" value="/scripts/pagedown/Markdown.Converter.js" />
+<c:url var="markdownEditorJsUrl" value="/scripts/pagedown/Markdown.Editor.js" />
+<c:url var="markdownSanitizerJsUrl" value="/scripts/pagedown/Markdown.Sanitizer.js" />
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
@@ -28,9 +35,12 @@
 		<c:if test="${not empty article.keywords}">
 			<meta name="keywords" content="${article.description}" />
 		</c:if>
+		
 		<title><c:out value="${articlePage.title}" /></title>
-		<link rel="stylesheet" type="text/css" href="${articlesCssUrl}" />
+		
 		<link rel="stylesheet" type="text/css" href="${shCssUrl}" />
+		<link rel="stylesheet" type="text/css" href="${wmdCssUrl}" />
+		<link rel="stylesheet" type="text/css" href="${articlesCssUrl}" />
 	</head>
 	<body>
 		<ul id="breadcrumbs">
@@ -82,9 +92,18 @@
 		<script type="text/javascript" src="${shCoreJsUrl}"></script>
 		<script type="text/javascript" src="${shBrushJavaJsUrl}"></script>
 		<script type="text/javascript" src="${shBrushXmlJsUrl}"></script>
+		<script type="text/javascript" src="${markdownConverterJsUrl}"></script>
+		<script type="text/javascript" src="${markdownSanitizerJsUrl}"></script>
+		<script type="text/javascript" src="${markdownEditorJsUrl}"></script>
 		<script type="text/javascript">
-			dp.SyntaxHighlighter.ClipboardSwf = '${clipboardSwfUrl}';
-			dp.SyntaxHighlighter.HighlightAll('code');
+			$(function () {
+				dp.SyntaxHighlighter.ClipboardSwf = '${clipboardSwfUrl}';
+				dp.SyntaxHighlighter.HighlightAll('code');
+				
+				var converter = Markdown.getSanitizingConverter();
+				var editor = new Markdown.Editor(converter);
+				editor.run();
+			});
 		</script>
 	</body>
 </html>
